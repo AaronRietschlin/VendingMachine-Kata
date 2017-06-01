@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.List;
+
 import static com.ariets.kata.model.Coin.DIME;
 import static com.ariets.kata.model.Coin.NICKEL;
 import static com.ariets.kata.model.Coin.PENNY;
@@ -57,7 +59,7 @@ public class VendingMachineTest {
 
     @Test
     public void insertCoinIncreasesProperlyWithMultipleValues() {
-        demandWorkingVendingMachine();
+        doReturn(true).when(mockMoneyValidator).isValid(any(Coin.class));
         vendingMachine.insertCoin(NICKEL);
         vendingMachine.insertCoin(QUARTER);
         vendingMachine.insertCoin(DIME);
@@ -121,11 +123,48 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void getChangeReturnsProperWhenNoProductIsSelected() {
-        assertThat(vendingMachine.getChange()).isNull();
+    public void getChangeReturnsProper100() {
+        doReturn(true).when(mockMoneyValidator).isValid(1.00);
+        vendingMachine.insertValue(1.00);
+
+        List<Coin> change = vendingMachine.getChange();
+
+        assertThat(change).hasSize(4).contains(QUARTER, QUARTER, QUARTER, QUARTER);
+        verify(mockMoneyValidator).isValid(1.00);
     }
 
-    private void demandWorkingVendingMachine() {
-        doReturn(true).when(mockMoneyValidator).isValid(any(Coin.class));
+    @Test
+    public void getChangeReturnsProperFor90() {
+        doReturn(true).when(mockMoneyValidator).isValid(0.92);
+        vendingMachine.insertValue(0.92);
+
+        List<Coin> change = vendingMachine.getChange();
+
+        assertThat(change).hasSize(8)
+                .contains(QUARTER, QUARTER, QUARTER, DIME, NICKEL, PENNY, PENNY);
+        verify(mockMoneyValidator).isValid(0.92);
     }
+
+    @Test
+    public void getChangeReturnsProperFor22() {
+        doReturn(true).when(mockMoneyValidator).isValid(0.22);
+        vendingMachine.insertValue(0.22);
+
+        List<Coin> change = vendingMachine.getChange();
+
+        assertThat(change).hasSize(4).contains(DIME, DIME, PENNY, PENNY);
+        verify(mockMoneyValidator).isValid(0.22);
+    }
+
+    @Test
+    public void getChangeReturnsProperFor9() {
+        doReturn(true).when(mockMoneyValidator).isValid(0.09);
+        vendingMachine.insertValue(0.09);
+
+        List<Coin> change = vendingMachine.getChange();
+
+        assertThat(change).hasSize(5).contains(NICKEL, PENNY, PENNY, PENNY, PENNY);
+        verify(mockMoneyValidator).isValid(0.09);
+    }
+
 }
