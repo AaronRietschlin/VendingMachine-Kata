@@ -104,6 +104,27 @@ public class VendingMachineTest {
         verify(mockMoneyValidator).isValid(1.00);
     }
 
+    @Test
+    public void selectProductSubtractsValueProperly() {
+        doReturn(true).when(mockMoneyValidator).isValid(10.00);
+        vendingMachine.insertValue(10.00);
+
+        vendingMachine.selectProduct(COLA);
+
+        assertThat(vendingMachine.getCurrentValue()).isEqualTo(9.00);
+        verify(mockMoneyValidator).isValid(10.00);
+    }
+
+    @Test
+    public void getChangeReturnsNullWhenNoFunds() {
+        assertThat(vendingMachine.getChange()).isNull();
+    }
+
+    @Test
+    public void getChangeReturnsProperWhenNoProductIsSelected() {
+        assertThat(vendingMachine.getChange()).isNull();
+    }
+
     private void demandWorkingVendingMachine() {
         doReturn(true).when(mockMoneyValidator).isValid(any(Coin.class));
     }

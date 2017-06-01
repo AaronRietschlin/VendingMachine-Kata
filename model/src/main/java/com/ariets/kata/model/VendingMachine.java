@@ -1,5 +1,8 @@
 package com.ariets.kata.model;
 
+import android.support.annotation.Nullable;
+
+import java.util.Collections;
 import java.util.List;
 
 import static com.ariets.kata.model.VendingResult.INSUFFICIENT_FUNDS;
@@ -43,6 +46,11 @@ public class VendingMachine {
             return SUCCESS;
         }
         return INSUFFICIENT_FUNDS;
+    }
+
+    @Nullable
+    public List<Coin> getChange() {
+        return Collections.emptyList();
     }
 
 }
