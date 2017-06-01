@@ -41,8 +41,10 @@ public class VendingMachine {
     }
 
     public VendingResult selectProduct(Product product) {
-        if (currentValue >= product.getPrice()) {
+        double price = product.getPrice();
+        if (currentValue >= price) {
             // TOD0 - Remove from vault of products.
+            currentValue -= price;
             return SUCCESS;
         }
         return INSUFFICIENT_FUNDS;
