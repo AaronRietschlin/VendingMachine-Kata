@@ -7,9 +7,9 @@ public class MoneyValidator {
     public boolean isValid(Coin coin) {
         return coin != PENNY;
     }
-
+    
     public boolean isCorrectPayment(double currentPayment, Product product) {
-        return false;
+        return currentPayment >= product.getPrice();
     }
 
 }
