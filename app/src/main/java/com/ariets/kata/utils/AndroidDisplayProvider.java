@@ -3,6 +3,7 @@ package com.ariets.kata.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.ariets.kata.R;
 import com.ariets.kata.model.DisplayProvider;
 import com.ariets.kata.model.Product;
 
@@ -17,26 +18,26 @@ public class AndroidDisplayProvider implements DisplayProvider {
 
     @Override
     public String displayExactChange() {
-        return null;
+        return context.getString(R.string.exact_change);
     }
 
     @Override
     public String displayInsertCoin() {
-        return null;
+        return context.getString(R.string.insert_coin);
     }
 
     @Override
     public String displayPrice(Product product) {
-        return null;
+        return context.getString(R.string.price, product.getDisplayPrice());
     }
 
     @Override
     public String displaySoldOut() {
-        return null;
+        return context.getString(R.string.sold_out);
     }
 
     @Override
     public String displayThankYou() {
-        return null;
+        return context.getString(R.string.thank_you);
     }
 }

@@ -1,5 +1,7 @@
 package com.ariets.kata.model;
 
+import java.text.DecimalFormat;
+
 public enum Product {
 
     COLA(1.00),
@@ -14,5 +16,10 @@ public enum Product {
 
     public double getPrice() {
         return price;
+    }
+
+    public String getDisplayPrice() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(price);
     }
 }

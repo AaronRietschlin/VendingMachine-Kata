@@ -1,6 +1,5 @@
 package com.ariets.kata.utils;
 
-import android.content.res.Resources;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -12,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static com.ariets.kata.model.Product.COLA;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -51,6 +51,11 @@ public class AndroidDisplayProviderTest {
     @Test
     public void displayThankYouReturnsProperly() {
         assertEquals("Thank You".toUpperCase(), displayProvider.displayThankYou());
+    }
+
+    @Test
+    public void displayPriceReturnsProperlyForCola() {
+        assertEquals("PRICE: $1.00".toUpperCase(), displayProvider.displayPrice(COLA));
     }
 
 }

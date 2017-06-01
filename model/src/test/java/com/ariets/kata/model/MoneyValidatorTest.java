@@ -45,6 +45,21 @@ public class MoneyValidatorTest {
     }
 
     @Test
+    public void isValidValueReturnsFalseForPenny() {
+        assertThat(moneyValidator.isValid(PENNY.getValue())).isFalse();
+    }
+
+    @Test
+    public void isValidValueReturnsTrueForNickel() {
+        assertThat(moneyValidator.isValid(NICKEL.getValue())).isTrue();
+    }
+
+    @Test
+    public void isValidValueReturnsFalseForCustom() {
+        assertThat(moneyValidator.isValid(1.5)).isFalse();
+    }
+
+    @Test
     public void isCorrectPaymentForChipsReturnsTrueForExactAmount() {
         assertThat(moneyValidator.isCorrectPayment(CHIPS.getPrice(), CHIPS)).isTrue();
     }

@@ -24,4 +24,19 @@ public class ProductTest {
         assertThat(CHIPS.getPrice()).isEqualTo(0.50);
     }
 
+    @Test
+    public void candyDisplayPriceSanityTest() {
+        assertThat(CANDY.getDisplayPrice()).isEqualTo("0.65");
+    }
+
+    @Test
+    public void colaDisplayPriceSanityTest() {
+        assertThat(COLA.getDisplayPrice()).isEqualTo("1.00");
+    }
+
+    @Test
+    public void chipsDisplayPriceSanityTest() {
+        assertThat(CHIPS.getDisplayPrice()).isEqualTo("0.50");
+    }
+
 }
