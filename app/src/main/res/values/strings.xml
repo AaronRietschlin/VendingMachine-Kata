@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Pillar-VendingMachine-Kata</string>
+
+    <string name="sold_out">SOLD OUT</string>
+    <string name="thank_you">THANK YOU</string>
+    <string name="insert_coin">INSERT COIN</string>
+    <string name="exact_change">EXACT CHANGE ONLY</string>
+
 </resources>
