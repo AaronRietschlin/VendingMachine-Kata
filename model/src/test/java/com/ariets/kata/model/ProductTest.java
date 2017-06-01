@@ -1,0 +1,27 @@
+package com.ariets.kata.model;
+
+import org.junit.Test;
+
+import static com.ariets.kata.model.Product.CANDY;
+import static com.ariets.kata.model.Product.CHIPS;
+import static com.ariets.kata.model.Product.COLA;
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class ProductTest {
+
+    @Test
+    public void candySanityTest() {
+        assertThat(CANDY.getPrice()).isEqualTo(0.65);
+    }
+
+    @Test
+    public void colaSanityTest() {
+        assertThat(COLA.getPrice()).isEqualTo(1.00);
+    }
+
+    @Test
+    public void chipsSanityTest() {
+        assertThat(CHIPS.getPrice()).isEqualTo(0.50);
+    }
+
+}
