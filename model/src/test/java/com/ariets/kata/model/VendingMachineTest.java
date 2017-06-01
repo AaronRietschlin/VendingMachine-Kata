@@ -8,6 +8,10 @@ import static com.ariets.kata.model.Coin.DIME;
 import static com.ariets.kata.model.Coin.NICKEL;
 import static com.ariets.kata.model.Coin.PENNY;
 import static com.ariets.kata.model.Coin.QUARTER;
+import static com.ariets.kata.model.Product.COLA;
+import static com.ariets.kata.model.VendingResult.INSUFFICIENT_FUNDS;
+import static com.ariets.kata.model.VendingResult.SOLD_OUT;
+import static com.ariets.kata.model.VendingResult.SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -53,7 +57,7 @@ public class VendingMachineTest {
 
     @Test
     public void insertCoinIncreasesProperlyWithMultipleValues() {
-        doReturn(true).when(mockMoneyValidator).isValid(any(Coin.class));
+        demandWorkingVendingMachine();
         vendingMachine.insertCoin(NICKEL);
         vendingMachine.insertCoin(QUARTER);
         vendingMachine.insertCoin(DIME);
@@ -62,4 +66,45 @@ public class VendingMachineTest {
         verify(mockMoneyValidator, times(3)).isValid(any(Coin.class));
     }
 
+    @Test
+    public void selectProductReturnsSuccessWhenFundsAreEqualToCola() {
+        doReturn(true).when(mockMoneyValidator).isValid(1.00);
+        vendingMachine.insertValue(1.00);
+
+        assertThat(vendingMachine.selectProduct(COLA)).isEqualTo(SUCCESS);
+        verify(mockMoneyValidator).isValid(1.00);
+    }
+
+    @Test
+    public void selectProductReturnsSuccessWhenFundsAreGreaterThanCola() {
+        doReturn(true).when(mockMoneyValidator).isValid(10.00);
+        vendingMachine.insertValue(10.00);
+
+        assertThat(vendingMachine.selectProduct(COLA)).isEqualTo(SUCCESS);
+        verify(mockMoneyValidator).isValid(10.00);
+    }
+
+    // TODO - Code is still wrong here.
+    @Test
+    public void selectProductReturnsInSufficientFundsWhenCurrentValueIsNotEnough() {
+        doReturn(true).when(mockMoneyValidator).isValid(0.10);
+        vendingMachine.insertValue(0.10);
+
+        assertThat(vendingMachine.selectProduct(COLA)).isEqualTo(INSUFFICIENT_FUNDS);
+        verify(mockMoneyValidator).isValid(0.10);
+    }
+
+    @Test
+    public void selectProductReturnsSoldOutWhenCurrentProductIsSoldOut() {
+        doReturn(true).when(mockMoneyValidator).isValid(1.00);
+        // TODO - Mock out that the product is sold out!
+        vendingMachine.insertValue(1.00);
+
+        assertThat(vendingMachine.selectProduct(COLA)).isEqualTo(SOLD_OUT);
+        verify(mockMoneyValidator).isValid(1.00);
+    }
+
+    private void demandWorkingVendingMachine() {
+        doReturn(true).when(mockMoneyValidator).isValid(any(Coin.class));
+    }
 }
