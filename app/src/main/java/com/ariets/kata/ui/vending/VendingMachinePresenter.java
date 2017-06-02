@@ -1,8 +1,10 @@
 package com.ariets.kata.ui.vending;
 
+import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
 import com.ariets.kata.model.Coin;
+import com.ariets.kata.model.Formatter;
 import com.ariets.kata.model.VendingMachine;
 
 public class VendingMachinePresenter implements VendingMachineContract.Presenter<VendingMachineContract.View> {
@@ -10,6 +12,7 @@ public class VendingMachinePresenter implements VendingMachineContract.Presenter
     private final VendingMachine vendingMachine;
 
     @VisibleForTesting
+    @Nullable
     VendingMachineContract.View view;
 
     public VendingMachinePresenter(VendingMachine vendingMachine) {
@@ -28,6 +31,10 @@ public class VendingMachinePresenter implements VendingMachineContract.Presenter
 
     @Override
     public void insertCoin(Coin coin) {
+        if (view == null) {
+            return;
+        }
         vendingMachine.insertCoin(coin);
+        view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
     }
 }

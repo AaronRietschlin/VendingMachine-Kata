@@ -19,7 +19,6 @@ public enum Product {
     }
 
     public String getDisplayPrice() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        return df.format(price);
+        return Formatter.formatDouble(price);
     }
 }

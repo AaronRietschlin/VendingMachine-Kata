@@ -40,6 +40,7 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        injector = new Injector();
         setSupportActionBar(toolbar);
         setupPresenter();
     }
@@ -78,7 +79,7 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
             R.id.coin_view_penny
     })
     public void onCoinClicked(CoinView view) {
-        Snackbar.make(toolbar, "Coin selected: " + view.getCoin(), Snackbar.LENGTH_LONG).show();
+        presenter.insertCoin(view.getCoin());
     }
 
     @OnClick({
@@ -93,5 +94,12 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
     @OnClick(R.id.vending_btn_custom_value)
     public void onCustomValueButtonClicked() {
 
+    }
+
+    @Override
+    public void setCurrentValue(String currentValue) {
+        if (moneyMenuItem != null) {
+            moneyMenuItem.setTitle(currentValue);
+        }
     }
 }

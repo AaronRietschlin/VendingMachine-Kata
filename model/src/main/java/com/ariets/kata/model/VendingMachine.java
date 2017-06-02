@@ -48,6 +48,13 @@ public class VendingMachine {
         return currentValue;
     }
 
+    @Nullable public String getFormattedCurrentValue() {
+        if (currentValue < 0) {
+            currentValue = 0;
+        }
+        return displayProvider.displayPrice(currentValue);
+    }
+
     public VendingResult selectProduct(Product product) {
         double price = product.getPrice();
         if (currentValue >= price) {

@@ -12,4 +12,6 @@ public interface DisplayProvider {
 
     String displayThankYou();
 
+    String displayPrice(double value);
+
 }

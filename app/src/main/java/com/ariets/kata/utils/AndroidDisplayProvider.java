@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.ariets.kata.R;
 import com.ariets.kata.model.DisplayProvider;
+import com.ariets.kata.model.Formatter;
 import com.ariets.kata.model.Product;
 
 public class AndroidDisplayProvider implements DisplayProvider {
@@ -39,5 +40,10 @@ public class AndroidDisplayProvider implements DisplayProvider {
     @Override
     public String displayThankYou() {
         return context.getString(R.string.display_thank_you);
+    }
+
+    @Override
+    public String displayPrice(double value) {
+        return context.getString(R.string.price, Formatter.formatDouble(value));
     }
 }
