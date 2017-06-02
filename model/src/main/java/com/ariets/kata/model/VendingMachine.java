@@ -3,7 +3,6 @@ package com.ariets.kata.model;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.ariets.kata.model.Coin.DIME;
@@ -17,12 +16,15 @@ public class VendingMachine {
 
     private final MoneyValidator moneyValidator;
     private final DisplayProvider displayProvider;
+    private final ProductDispenser productDispenser;
 
     private double currentValue;
 
-    public VendingMachine(MoneyValidator moneyValidator, DisplayProvider displayProvider) {
+    public VendingMachine(MoneyValidator moneyValidator, DisplayProvider displayProvider,
+                          ProductDispenser productDispenser) {
         this.moneyValidator = moneyValidator;
         this.displayProvider = displayProvider;
+        this.productDispenser = productDispenser;
     }
 
     public boolean insertCoin(Coin coin) {
@@ -55,7 +57,7 @@ public class VendingMachine {
         return INSUFFICIENT_FUNDS;
     }
 
-    // TODO - Fix the change precision issue. 
+    // TODO - Fix the change precision issue.
     @Nullable
     public List<Coin> getChange() {
         if (currentValue == 0) {

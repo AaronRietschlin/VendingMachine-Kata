@@ -34,7 +34,7 @@ public class VendingMachineTest {
     @Before
     public void setUp() {
         initMocks(this);
-        vendingMachine = new VendingMachine(mockMoneyValidator, mockDisplayProvider);
+        vendingMachine = new VendingMachine(mockMoneyValidator, mockDisplayProvider, productDispenser);
     }
 
     @Test
