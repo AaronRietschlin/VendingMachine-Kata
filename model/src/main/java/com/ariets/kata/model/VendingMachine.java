@@ -10,6 +10,7 @@ import static com.ariets.kata.model.Coin.NICKEL;
 import static com.ariets.kata.model.Coin.PENNY;
 import static com.ariets.kata.model.Coin.QUARTER;
 import static com.ariets.kata.model.VendingResult.INSUFFICIENT_FUNDS;
+import static com.ariets.kata.model.VendingResult.SOLD_OUT;
 import static com.ariets.kata.model.VendingResult.SUCCESS;
 
 public class VendingMachine {
@@ -50,9 +51,14 @@ public class VendingMachine {
     public VendingResult selectProduct(Product product) {
         double price = product.getPrice();
         if (currentValue >= price) {
-            // TOD0 - Remove from vault of products.
-            currentValue -= price;
-            return SUCCESS;
+            if (productDispenser.isAvailable(product)) {
+                currentValue -= price;
+                // TODO - Do I want to "dispense" product here? Or in the calling class. For now, keeping it here.
+                productDispenser.dispenseItem(product);
+                return SUCCESS;
+            } else {
+                return SOLD_OUT;
+            }
         }
         return INSUFFICIENT_FUNDS;
     }

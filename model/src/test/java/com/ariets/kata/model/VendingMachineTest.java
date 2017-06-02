@@ -28,13 +28,16 @@ public class VendingMachineTest {
     MoneyValidator mockMoneyValidator;
     @Mock
     DisplayProvider mockDisplayProvider;
+    @Mock
+    ProductDispenser mockProductDispenser;
 
     private VendingMachine vendingMachine;
 
     @Before
     public void setUp() {
         initMocks(this);
-        vendingMachine = new VendingMachine(mockMoneyValidator, mockDisplayProvider, productDispenser);
+        vendingMachine = new VendingMachine(mockMoneyValidator, mockDisplayProvider,
+                mockProductDispenser);
     }
 
     @Test
@@ -72,19 +75,23 @@ public class VendingMachineTest {
     @Test
     public void selectProductReturnsSuccessWhenFundsAreEqualToCola() {
         doReturn(true).when(mockMoneyValidator).isValid(1.00);
+        doReturn(true).when(mockProductDispenser).isAvailable(COLA);
         vendingMachine.insertValue(1.00);
 
         assertThat(vendingMachine.selectProduct(COLA)).isEqualTo(SUCCESS);
         verify(mockMoneyValidator).isValid(1.00);
+        verify(mockProductDispenser).isAvailable(COLA);
     }
 
     @Test
     public void selectProductReturnsSuccessWhenFundsAreGreaterThanCola() {
         doReturn(true).when(mockMoneyValidator).isValid(10.00);
+        doReturn(true).when(mockProductDispenser).isAvailable(COLA);
         vendingMachine.insertValue(10.00);
 
         assertThat(vendingMachine.selectProduct(COLA)).isEqualTo(SUCCESS);
         verify(mockMoneyValidator).isValid(10.00);
+        verify(mockProductDispenser).isAvailable(COLA);
     }
 
     // TODO - Code is still wrong here.
@@ -110,12 +117,27 @@ public class VendingMachineTest {
     @Test
     public void selectProductSubtractsValueProperly() {
         doReturn(true).when(mockMoneyValidator).isValid(10.00);
+        doReturn(true).when(mockProductDispenser).isAvailable(COLA);
         vendingMachine.insertValue(10.00);
 
         vendingMachine.selectProduct(COLA);
 
         assertThat(vendingMachine.getCurrentValue()).isEqualTo(9.00);
         verify(mockMoneyValidator).isValid(10.00);
+        verify(mockProductDispenser).isAvailable(COLA);
+    }
+
+    @Test
+    public void selectProductRemovesFromDispenserWhenProperCriteriaIsMet() {
+        doReturn(true).when(mockMoneyValidator).isValid(10.00);
+        doReturn(true).when(mockProductDispenser).isAvailable(COLA);
+        vendingMachine.insertValue(10.00);
+
+        vendingMachine.selectProduct(COLA);
+
+        verify(mockProductDispenser).dispenseItem(COLA);
+        verify(mockMoneyValidator).isValid(10.00);
+        verify(mockProductDispenser).isAvailable(COLA);
     }
 
     @Test
