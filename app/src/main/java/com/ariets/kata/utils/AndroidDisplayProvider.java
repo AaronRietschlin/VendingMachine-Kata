@@ -18,26 +18,26 @@ public class AndroidDisplayProvider implements DisplayProvider {
 
     @Override
     public String displayExactChange() {
-        return context.getString(R.string.exact_change);
+        return context.getString(R.string.display_exact_change);
     }
 
     @Override
     public String displayInsertCoin() {
-        return context.getString(R.string.insert_coin);
+        return context.getString(R.string.display_insert_coin);
     }
 
     @Override
     public String displayPrice(Product product) {
-        return context.getString(R.string.price, product.getDisplayPrice());
+        return context.getString(R.string.display_price, product.getDisplayPrice());
     }
 
     @Override
     public String displaySoldOut() {
-        return context.getString(R.string.sold_out);
+        return context.getString(R.string.display_sold_out);
     }
 
     @Override
     public String displayThankYou() {
-        return context.getString(R.string.thank_you);
+        return context.getString(R.string.display_thank_you);
     }
 }

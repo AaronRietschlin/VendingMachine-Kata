@@ -3,7 +3,7 @@ package com.ariets.kata.utils;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.ariets.kata.MainActivity;
+import com.ariets.kata.ui.MainActivity;
 import com.ariets.kata.model.DisplayProvider;
 
 import org.junit.Before;
