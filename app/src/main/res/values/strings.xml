@@ -7,6 +7,10 @@
     <string name="display_price">PRICE: $%1$s</string>
     <string name="display_exact_change">EXACT CHANGE ONLY</string>
 
+    <string name="custom_value">Enter Custom Value</string>
+    <string name="title_products">Products</string>
+    <string name="product_title">%1$s ($%2$s)</string>
+
     <string name="coin_value_penny">1¢</string>
     <string name="coin_value_nickel">5¢</string>
     <string name="coin_value_dime">10¢</string>

@@ -10,4 +10,12 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="ProductTextView">
+        <attr name="productType" format="enum">
+            <enum name="candy" value="1" />
+            <enum name="chips" value="2" />
+            <enum name="cola" value="3" />
+        </attr>
+    </declare-styleable>
+
 </resources>

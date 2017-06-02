@@ -73,9 +73,7 @@ public class CoinView extends FrameLayout {
         TypedArray typedArray = theme.obtainStyledAttributes(attrs, R.styleable.CoinView, 0, 0);
         try {
             int coinType = typedArray.getInteger(R.styleable.CoinView_coinType, 0);
-            if (coinType > 0) {
-                setCoinType(coinType);
-            }
+            setCoinType(coinType);
             setupView();
 
             TypedValue outValue = new TypedValue();

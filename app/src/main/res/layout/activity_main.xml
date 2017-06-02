@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:background="?colorPrimary"
+        android:focusableInTouchMode="true"
         android:gravity="end"
         app:theme="@style/ToolbarTheme"
-        tools:title="Pillar Vending" />
+        tools:title="Pillar Vending">
+
+        <requestFocus />
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -72,7 +76,83 @@
 
             </HorizontalScrollView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_small">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/vending_field_custom_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/custom_value"
+                    app:hintEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/vending_btn_custom_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="@dimen/spacing_small"
+                    android:tint="@color/colorAccent"
+                    app:srcCompat="@drawable/ic_send" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_small"
+                android:text="@string/title_products"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_small">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ariets.kata.ui.widget.ProductTextView
+                        android:id="@+id/vending_product_candy"
+                        style="@style/ProductButton"
+                        app:productType="candy" />
+
+                    <com.ariets.kata.ui.widget.ProductTextView
+                        android:id="@+id/vending_product_chips"
+                        style="@style/ProductButton"
+                        app:productType="chips" />
+
+                    <com.ariets.kata.ui.widget.ProductTextView
+                        android:id="@+id/vending_product_cola"
+                        style="@style/ProductButton"
+                        app:productType="cola" />
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
