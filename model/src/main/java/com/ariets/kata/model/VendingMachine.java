@@ -2,9 +2,14 @@ package com.ariets.kata.model;
 
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.ariets.kata.model.Coin.DIME;
+import static com.ariets.kata.model.Coin.NICKEL;
+import static com.ariets.kata.model.Coin.PENNY;
+import static com.ariets.kata.model.Coin.QUARTER;
 import static com.ariets.kata.model.VendingResult.INSUFFICIENT_FUNDS;
 import static com.ariets.kata.model.VendingResult.SUCCESS;
 
@@ -52,7 +57,24 @@ public class VendingMachine {
 
     @Nullable
     public List<Coin> getChange() {
-        return Collections.emptyList();
+        if (currentValue == 0) {
+            return null;
+        }
+        List<Coin> change = new ArrayList<>();
+        addCoinForOffset(change, QUARTER);
+        addCoinForOffset(change, DIME);
+        addCoinForOffset(change, NICKEL);
+        addCoinForOffset(change, PENNY);
+        return change;
+    }
+
+    private void addCoinForOffset(List<Coin> currentList, Coin coin) {
+        double coinValue = coin.getValue();
+        int coinCount = (int) (currentValue / coinValue);
+        while (coinCount-- > 0) {
+            currentList.add(coin);
+            currentValue -= coinValue;
+        }
     }
 
 }
