@@ -12,7 +12,8 @@
         android:layout_height="?android:actionBarSize"
         android:background="?colorPrimary"
         android:gravity="end"
-        app:theme="@style/ToolbarTheme" />
+        app:theme="@style/ToolbarTheme"
+        tools:title="Pillar Vending" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -34,6 +35,38 @@
                 android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 tools:text="INSUFFICIENT FUNDS" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="quarter" />
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="dime" />
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="nickel" />
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="penny" />
+                </LinearLayout>
+
+            </HorizontalScrollView>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

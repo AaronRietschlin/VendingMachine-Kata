@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CoinView">
+        <attr name="coinType" format="enum">
+            <enum name="penny" value="1" />
+            <enum name="nickel" value="2" />
+            <enum name="dime" value="3" />
+            <enum name="quarter" value="4" />
+        </attr>
+    </declare-styleable>
+
+</resources>
