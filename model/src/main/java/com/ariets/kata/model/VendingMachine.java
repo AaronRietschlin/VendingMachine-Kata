@@ -55,6 +55,7 @@ public class VendingMachine {
         return INSUFFICIENT_FUNDS;
     }
 
+    // TODO - Fix the change precision issue. 
     @Nullable
     public List<Coin> getChange() {
         if (currentValue == 0) {
