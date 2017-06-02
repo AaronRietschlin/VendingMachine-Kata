@@ -3,7 +3,7 @@ package com.ariets.kata.utils;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.ariets.kata.ui.MainActivity;
+import com.ariets.kata.ui.vending.VendingActivity;
 import com.ariets.kata.model.DisplayProvider;
 
 import org.junit.Before;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class AndroidDisplayProviderTest {
 
     @Rule
-    public ActivityTestRule activityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule activityTestRule = new ActivityTestRule<>(VendingActivity.class);
 
     private DisplayProvider displayProvider;
 
