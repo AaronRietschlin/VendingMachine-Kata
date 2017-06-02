@@ -5,7 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ariets.kata.R;
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    private MenuItem moneyMenuItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.vending, menu);
+        moneyMenuItem = menu.findItem(R.id.menu_money_label);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @OnClick({
@@ -49,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(toolbar, "Product selected: " + view.getProduct(), Snackbar.LENGTH_LONG).show();
     }
 
-    @OnClick(R.id.vending_btn_custom_value) public void onCustomValueButtonClicked() {
+    @OnClick(R.id.vending_btn_custom_value)
+    public void onCustomValueButtonClicked() {
 
     }
 }
