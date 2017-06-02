@@ -46,21 +46,25 @@
                     android:orientation="horizontal">
 
                     <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_quarter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:coinType="quarter" />
 
                     <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_dime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:coinType="dime" />
 
                     <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_nickel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:coinType="nickel" />
 
                     <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_penny"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:coinType="penny" />
