@@ -2,13 +2,7 @@ package com.ariets.kata.model;
 
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.ariets.kata.model.Coin.DIME;
-import static com.ariets.kata.model.Coin.NICKEL;
-import static com.ariets.kata.model.Coin.PENNY;
-import static com.ariets.kata.model.Coin.QUARTER;
+import static com.ariets.kata.model.VendingResult.EXACT_CHANGE_REQUIRED;
 import static com.ariets.kata.model.VendingResult.INSUFFICIENT_FUNDS;
 import static com.ariets.kata.model.VendingResult.SOLD_OUT;
 import static com.ariets.kata.model.VendingResult.SUCCESS;
@@ -20,19 +14,21 @@ public class VendingMachine {
     private final ProductDispenser productDispenser;
 
     private double currentValue;
+    private double moneyInMachine;
 
     public VendingMachine(MoneyValidator moneyValidator, DisplayProvider displayProvider,
-                          ProductDispenser productDispenser) {
+                          ProductDispenser productDispenser, double moneyInMachine) {
         this.moneyValidator = moneyValidator;
         this.displayProvider = displayProvider;
         this.productDispenser = productDispenser;
+        this.moneyInMachine = moneyInMachine;
     }
 
     public boolean insertCoin(Coin coin) {
         if (!moneyValidator.isValid(coin)) {
             return false;
         }
-        currentValue += coin.getValue();
+        increaseValue(coin.getValue());
         return true;
     }
 
@@ -40,7 +36,7 @@ public class VendingMachine {
         if (!moneyValidator.isValid(value)) {
             return false;
         }
-        currentValue += value;
+        increaseValue(value);
         return true;
     }
 
@@ -50,6 +46,7 @@ public class VendingMachine {
 
     public void returnCoins() {
         currentValue = 0;
+        moneyInMachine -= currentValue;
     }
 
     @Nullable
@@ -63,9 +60,10 @@ public class VendingMachine {
     public VendingResult selectProduct(Product product) {
         double price = product.getPrice();
         if (currentValue >= price) {
-            if (productDispenser.isAvailable(product)) {
-                currentValue -= price;
-                // TODO - Do I want to "dispense" product here? Or in the calling class. For now, keeping it here.
+            if (!canProvideChange(product)) {
+                return EXACT_CHANGE_REQUIRED;
+            } else if (productDispenser.isAvailable(product)) {
+                decreaseValue(price);
                 productDispenser.dispenseItem(product);
                 return SUCCESS;
             } else {
@@ -75,27 +73,19 @@ public class VendingMachine {
         return INSUFFICIENT_FUNDS;
     }
 
-    // TODO - Fix the change precision issue.
-    @Nullable
-    public List<Coin> getChange() {
-        if (currentValue == 0) {
-            return null;
-        }
-        List<Coin> change = new ArrayList<>();
-        addCoinForOffset(change, QUARTER);
-        addCoinForOffset(change, DIME);
-        addCoinForOffset(change, NICKEL);
-        addCoinForOffset(change, PENNY);
-        return change;
+    // TODO - This isn't right. Need to determine the type of change we can make and return from that.
+    public boolean canProvideChange(Product product) {
+        return moneyInMachine > product.getPrice();
     }
 
-    private void addCoinForOffset(List<Coin> currentList, Coin coin) {
-        double coinValue = coin.getValue();
-        int coinCount = (int) (currentValue / coinValue);
-        while (coinCount-- > 0) {
-            currentList.add(coin);
-            currentValue -= coinValue;
-        }
+    private void increaseValue(double money) {
+        currentValue += money;
+        moneyInMachine += money;
+    }
+
+    private void decreaseValue(double money) {
+        currentValue -= money;
+        moneyInMachine -= money;
     }
 
 }

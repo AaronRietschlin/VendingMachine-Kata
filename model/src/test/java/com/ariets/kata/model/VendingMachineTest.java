@@ -12,6 +12,7 @@ import static com.ariets.kata.model.Coin.NICKEL;
 import static com.ariets.kata.model.Coin.PENNY;
 import static com.ariets.kata.model.Coin.QUARTER;
 import static com.ariets.kata.model.Product.COLA;
+import static com.ariets.kata.model.VendingResult.EXACT_CHANGE_REQUIRED;
 import static com.ariets.kata.model.VendingResult.INSUFFICIENT_FUNDS;
 import static com.ariets.kata.model.VendingResult.SOLD_OUT;
 import static com.ariets.kata.model.VendingResult.SUCCESS;
@@ -32,12 +33,17 @@ public class VendingMachineTest {
     ProductDispenser mockProductDispenser;
 
     private VendingMachine vendingMachine;
+    private static final double MONEY_IN_MACHINE = 10;
 
     @Before
     public void setUp() {
         initMocks(this);
-        vendingMachine = new VendingMachine(mockMoneyValidator, mockDisplayProvider,
-                mockProductDispenser);
+        vendingMachine = demandVendingMachine(MONEY_IN_MACHINE);
+    }
+
+    private VendingMachine demandVendingMachine(double moneyInMachine) {
+        return new VendingMachine(mockMoneyValidator, mockDisplayProvider,
+                mockProductDispenser, moneyInMachine);
     }
 
     @Test
@@ -94,7 +100,6 @@ public class VendingMachineTest {
         verify(mockProductDispenser).isAvailable(COLA);
     }
 
-    // TODO - Code is still wrong here.
     @Test
     public void selectProductReturnsInSufficientFundsWhenCurrentValueIsNotEnough() {
         doReturn(true).when(mockMoneyValidator).isValid(0.10);
@@ -107,7 +112,6 @@ public class VendingMachineTest {
     @Test
     public void selectProductReturnsSoldOutWhenCurrentProductIsSoldOut() {
         doReturn(true).when(mockMoneyValidator).isValid(1.00);
-        // TODO - Mock out that the product is sold out!
         vendingMachine.insertValue(1.00);
 
         assertThat(vendingMachine.selectProduct(COLA)).isEqualTo(SOLD_OUT);
@@ -141,53 +145,15 @@ public class VendingMachineTest {
     }
 
     @Test
-    public void getChangeReturnsNullWhenNoFunds() {
-        assertThat(vendingMachine.getChange()).isNull();
+    public void canProvideChangeReturnsFalseWhenMoneyIsNotValid() {
+        vendingMachine = demandVendingMachine(0.00);
+
+        assertThat(vendingMachine.canProvideChange(COLA)).isFalse();
     }
 
-    @Test @Ignore("TODO - Fix change precision issue.")
-    public void getChangeReturnsProper100() {
-        doReturn(true).when(mockMoneyValidator).isValid(1.00);
-        vendingMachine.insertValue(1.00);
-
-        List<Coin> change = vendingMachine.getChange();
-
-        assertThat(change).hasSize(4).contains(QUARTER, QUARTER, QUARTER, QUARTER);
-        verify(mockMoneyValidator).isValid(1.00);
-    }
-
-    @Test @Ignore("TODO - Fix change precision issue.")
-    public void getChangeReturnsProperFor90() {
-        doReturn(true).when(mockMoneyValidator).isValid(0.92);
-        vendingMachine.insertValue(0.92);
-
-        List<Coin> change = vendingMachine.getChange();
-
-        assertThat(change).hasSize(8)
-                .contains(QUARTER, QUARTER, QUARTER, DIME, NICKEL, PENNY, PENNY);
-        verify(mockMoneyValidator).isValid(0.92);
-    }
-
-    @Test @Ignore("TODO - Fix change precision issue.")
-    public void getChangeReturnsProperFor22() {
-        doReturn(true).when(mockMoneyValidator).isValid(0.22);
-        vendingMachine.insertValue(0.22);
-
-        List<Coin> change = vendingMachine.getChange();
-
-        assertThat(change).hasSize(4).contains(DIME, DIME, PENNY, PENNY);
-        verify(mockMoneyValidator).isValid(0.22);
-    }
-
-    @Test @Ignore("TODO - Fix change precision issue.")
-    public void getChangeReturnsProperFor9() {
-        doReturn(true).when(mockMoneyValidator).isValid(0.09);
-        vendingMachine.insertValue(0.09);
-
-        List<Coin> change = vendingMachine.getChange();
-
-        assertThat(change).hasSize(5).contains(NICKEL, PENNY, PENNY, PENNY, PENNY);
-        verify(mockMoneyValidator).isValid(0.09);
+    @Test
+    public void canProvideChangeReturnsTrueWhenMoneyIsValid() {
+        assertThat(vendingMachine.canProvideChange(COLA)).isTrue();
     }
 
 }

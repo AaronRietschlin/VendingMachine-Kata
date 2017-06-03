@@ -4,6 +4,7 @@ public enum VendingResult {
 
     SUCCESS,
     SOLD_OUT,
-    INSUFFICIENT_FUNDS
+    INSUFFICIENT_FUNDS,
+    EXACT_CHANGE_REQUIRED
 
 }

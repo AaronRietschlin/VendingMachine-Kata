@@ -27,7 +27,7 @@ public class Injector {
 
     public VendingMachine provideVendingMachine(
             MoneyValidator validator, DisplayProvider displayProvider, ProductDispenser dispenser) {
-        return new VendingMachine(validator, displayProvider, dispenser);
+        return new VendingMachine(validator, displayProvider, dispenser, 0.00);
     }
 
     public MoneyValidator provideMoneyValidator() {
@@ -39,7 +39,6 @@ public class Injector {
     }
 
     public ProductDispenser provideProductDispenser() {
-        // TODO - Better way to do this? For now, defaulting to five of each.
         Map<Product, Integer> map = new HashMap<>();
         map.put(CANDY, 5);
         map.put(CHIPS, 5);
