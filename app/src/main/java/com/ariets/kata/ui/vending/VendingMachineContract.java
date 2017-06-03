@@ -11,6 +11,8 @@ public interface VendingMachineContract {
 
         void returnChange(String change);
 
+        void onSuccess(Product product);
+
         void onError(VendingError error, String... params);
 
         void setCurrentDisplay(String display);

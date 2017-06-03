@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.ariets.kata.R;
 import com.ariets.kata.model.DisplayProvider;
 import com.ariets.kata.model.MoneyValidator;
+import com.ariets.kata.model.Product;
 import com.ariets.kata.model.ProductDispenser;
 import com.ariets.kata.model.VendingMachine;
 import com.ariets.kata.ui.widget.CoinView;
@@ -132,6 +133,11 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
     @Override
     public void returnChange(String change) {
         tvCoinReturn.setText(getString(R.string.coin_return_value, change));
+    }
+
+    @Override
+    public void onSuccess(Product product) {
+        Snackbar.make(toolbar, getString(R.string.enjoy_your_product, product), LENGTH_LONG).show();
     }
 
     @Override

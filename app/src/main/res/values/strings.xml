@@ -19,6 +19,7 @@
     <string name="invalid_coin">Invalid coin. Only quarters, dimes and nickels accepted. Money has been returned.</string>
     <string name="product_sold_out">Unfortunately, %s is sold out.</string>
     <string name="insufficient_funds">Insufficient funds. Please insert at least %s.</string>
+    <string name="enjoy_your_product">Dispensing %s. Enjoy!</string>
 
     <string name="coin_value_penny">1¢</string>
     <string name="coin_value_nickel">5¢</string>

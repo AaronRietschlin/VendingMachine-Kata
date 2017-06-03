@@ -70,9 +70,11 @@ public class VendingMachinePresenter implements
             case SUCCESS:
                 view.setCurrentDisplay(displayProvider.displayThankYou());
                 view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+                view.onSuccess(product);
                 break;
             case SOLD_OUT:
                 view.setCurrentDisplay(displayProvider.displaySoldOut());
+                view.onError(VendingError.PRODUCT_SOLD_OUT, product.toString());
                 break;
             case INSUFFICIENT_FUNDS:
                 view.setCurrentDisplay(displayProvider.displayPrice(product));
