@@ -9,6 +9,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -36,16 +37,20 @@ import static com.ariets.kata.model.Coin.QUARTER;
 
 public class CoinView extends FrameLayout {
 
-    private static final int COIN_NICKEL = 2;
-    private static final int COIN_DIME = 3;
-    private static final int COIN_QUARTER = 4;
+    @VisibleForTesting
+    static final int COIN_NICKEL = 2;
+    @VisibleForTesting
+    static final int COIN_DIME = 3;
+    @VisibleForTesting
+    static final int COIN_QUARTER = 4;
 
     @BindView(R.id.coin_view_image)
     ImageView imageView;
     @BindView(R.id.coin_view_textview)
     TextView textView;
 
-    private Coin coin;
+    @VisibleForTesting
+    Coin coin;
 
     public CoinView(@NonNull Context context) {
         this(context, null);
@@ -84,7 +89,8 @@ public class CoinView extends FrameLayout {
         }
     }
 
-    private void setCoinType(int coinType) {
+    @VisibleForTesting
+    void setCoinType(int coinType) {
         switch (coinType) {
             case COIN_NICKEL:
                 coin = NICKEL;
@@ -106,7 +112,8 @@ public class CoinView extends FrameLayout {
         setLayoutParams(params);
     }
 
-    private void setupView() {
+    @VisibleForTesting
+    void setupView() {
         if (coin == null) {
             return;
         }

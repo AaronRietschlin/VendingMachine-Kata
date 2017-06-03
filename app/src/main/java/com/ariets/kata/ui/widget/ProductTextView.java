@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
@@ -16,9 +17,9 @@ import static com.ariets.kata.model.Product.COLA;
 
 public class ProductTextView extends AppCompatTextView {
 
-    private static final int PRODUCT_CANDY = 1;
-    private static final int PRODUCT_CHIPS = 2;
-    private static final int PRODUCT_COLA = 3;
+    @VisibleForTesting static final int PRODUCT_CANDY = 1;
+    @VisibleForTesting static final int PRODUCT_CHIPS = 2;
+    @VisibleForTesting static final int PRODUCT_COLA = 3;
 
     @Nullable
     private Product product;
@@ -48,7 +49,7 @@ public class ProductTextView extends AppCompatTextView {
         }
     }
 
-    private void setProductType(Context context, int productType) {
+    @VisibleForTesting void setProductType(Context context, int productType) {
         switch (productType) {
             case PRODUCT_CANDY:
                 product = CANDY;
