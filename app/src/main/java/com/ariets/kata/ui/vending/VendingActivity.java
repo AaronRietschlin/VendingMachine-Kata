@@ -156,6 +156,9 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
             case INSUFFICIENT_FUNDS:
                 errorStringRes = R.string.insufficient_funds;
                 break;
+            case EXACT_CHANGE:
+                errorStringRes = R.string.exact_change;
+                break;
         }
         if (params == null) {
             Snackbar.make(toolbar, errorStringRes, LENGTH_LONG).show();

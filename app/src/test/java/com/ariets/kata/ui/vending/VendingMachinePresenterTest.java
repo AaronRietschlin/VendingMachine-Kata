@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.ariets.kata.model.Coin.NICKEL;
+import static com.ariets.kata.model.Product.CHIPS;
 import static com.ariets.kata.model.Product.COLA;
 import static com.ariets.kata.ui.vending.VendingError.INVALID_COIN;
 import static junit.framework.Assert.assertNull;
@@ -65,14 +66,27 @@ public class VendingMachinePresenterTest {
     }
 
     @Test
-    public void initializeCalsViewProperly() {
+    public void initializeCallsViewProperlyWhenExactChangeIsNotRequired() {
         String text = "text";
-        doReturn(text).when(mockDisplayProvider).displayInsertCoin();
+        doReturn(text).when(mockDisplayProvider).displayExactChange();
         presenter.attachView(mockView);
 
         presenter.initialize();
 
         verify(mockView).setCurrentDisplay(text);
+    }
+
+    @Test
+    public void initializeCallsProperlyWhenExactChangeIsRequired() {
+        String text = "text";
+        doReturn(text).when(mockDisplayProvider).displayInsertCoin();
+        doReturn(10d).when(mockVendingMachine).getMoneyInMachine();
+        presenter.attachView(mockView);
+
+        presenter.initialize();
+
+        verify(mockView).setCurrentDisplay(text);
+        verify(mockVendingMachine).getMoneyInMachine();
     }
 
     @Test
@@ -127,6 +141,19 @@ public class VendingMachinePresenterTest {
 
         verify(mockView).setCurrentDisplay("1.50");
         verify(mockVendingMachine).selectProduct(COLA);
+    }
+
+    @Test
+    public void selectProductWithExactChangeCallsProperMethods() {
+        doReturn(VendingResult.EXACT_CHANGE_REQUIRED).when(mockVendingMachine).selectProduct(CHIPS);
+        doReturn("Exact Change").when(mockDisplayProvider).displayExactChange();
+        presenter.attachView(mockView);
+
+        presenter.selectProduct(CHIPS);
+
+        verify(mockView).setCurrentDisplay("Exact Change");
+        verify(mockView).onError(VendingError.EXACT_CHANGE);
+        verify(mockVendingMachine).selectProduct(CHIPS);
     }
 
 }

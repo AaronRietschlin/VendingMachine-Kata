@@ -73,6 +73,10 @@ public class VendingMachine {
         return INSUFFICIENT_FUNDS;
     }
 
+    public double getMoneyInMachine() {
+        return moneyInMachine;
+    }
+
     // TODO - This isn't right. Need to determine the type of change we can make and return from that.
     // Do it by not increasing money in machine.
     public boolean canProvideChange(Product product) {

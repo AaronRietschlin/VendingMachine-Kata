@@ -9,6 +9,9 @@ import com.ariets.kata.model.Product;
 import com.ariets.kata.model.VendingMachine;
 import com.ariets.kata.model.VendingResult;
 
+import static com.ariets.kata.model.Product.CANDY;
+import static com.ariets.kata.model.Product.CHIPS;
+import static com.ariets.kata.model.Product.COLA;
 import static com.ariets.kata.ui.vending.VendingError.INVALID_COIN;
 import static com.ariets.kata.ui.vending.VendingError.NO_COINS;
 
@@ -81,14 +84,24 @@ public class VendingMachinePresenter implements
                 view.onError(VendingError.INSUFFICIENT_FUNDS,
                         displayProvider.displayPrice(product.getPrice()));
                 break;
+            case EXACT_CHANGE_REQUIRED:
+                view.setCurrentDisplay(displayProvider.displayExactChange());
+                view.onError(VendingError.EXACT_CHANGE);
+                break;
         }
 
     }
 
     @Override
     public void initialize() {
-        String value = displayProvider.displayInsertCoin();
-        view.setCurrentDisplay(value);
+        double moneyInMachine = vendingMachine.getMoneyInMachine();
+        String initialDisplay;
+        if (moneyInMachine < CANDY.getPrice() || moneyInMachine < CHIPS.getPrice() || moneyInMachine < COLA.getPrice()) {
+            initialDisplay = displayProvider.displayExactChange();
+        } else {
+            initialDisplay = displayProvider.displayInsertCoin();
+        }
+        view.setCurrentDisplay(initialDisplay);
     }
 
     @Override
