@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.ariets.kata.model.Coin.NICKEL;
+import static com.ariets.kata.ui.vending.VendingError.INVALID_COIN;
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -51,19 +52,63 @@ public class VendingMachinePresenterTest {
     @Test
     public void insertCoinSetsCurrentValue() {
         doReturn("$1.50").when(mockVendingMachine).getFormattedCurrentValue();
+        doReturn(true).when(mockVendingMachine).insertCoin(NICKEL);
         presenter.attachView(mockView);
 
         presenter.insertCoin(NICKEL);
 
         verify(mockView).setCurrentValue("$1.50");
+        verify(mockVendingMachine).insertCoin(NICKEL);
         verify(mockVendingMachine).getFormattedCurrentValue();
     }
 
     @Test
-    public void getInitiaLDisplayForwardsToDisplayProvider() {
+    public void getInitialDisplayForwardsToDisplayProvider() {
         presenter.getInitialDisplay();
 
         verify(mockDisplayProvider).displayInsertCoin();
+    }
+
+    @Test
+    public void insertCustomValueWithInvalidTextReturnsInvalidCoin() {
+        presenter.attachView(mockView);
+
+        presenter.insertCustomValue("asdf");
+
+        verify(mockView).onError(INVALID_COIN);
+    }
+
+    @Test
+    public void insertCustomValueWithInvalidNumberReturnsInvalidCoin() {
+        presenter.attachView(mockView);
+
+        presenter.insertCustomValue("11.11.1");
+
+        verify(mockView).onError(INVALID_COIN);
+    }
+
+    @Test
+    public void insertCustomValueWithValidValueSetsValueOnView() {
+        String value = "0.25";
+        presenter.attachView(mockView);
+        doReturn(true).when(mockVendingMachine).insertValue(Double.valueOf(value));
+        doReturn(value).when(mockVendingMachine).getFormattedCurrentValue();
+
+        presenter.insertCustomValue(value);
+
+        verify(mockView).setCurrentValue(value);
+        verify(mockVendingMachine).insertValue(Double.valueOf(value));
+    }
+
+    @Test
+    public void insertCustomValueWithPennyValueCallsInvalidCoin() {
+        String value = "0.01";
+        presenter.attachView(mockView);
+        doReturn(value).when(mockVendingMachine).getFormattedCurrentValue();
+
+        presenter.insertCustomValue(value);
+
+        verify(mockView).onError(INVALID_COIN);
     }
 
 }

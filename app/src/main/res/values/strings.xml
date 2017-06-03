@@ -11,7 +11,12 @@
 
     <string name="custom_value">Enter Custom Value</string>
     <string name="title_products">Products</string>
+    <string name="title_change">Change</string>
     <string name="product_title">%1$s ($%2$s)</string>
+    <string name="return_coins">Return Coins</string>
+    <string name="coin_return_value">Change: %s</string>
+    <string name="no_coins">No coins to return.</string>
+    <string name="invalid_coin">Invalid coin. Only quarters, dimes and nickels accepted. Money has been returned.</string>
 
     <string name="coin_value_penny">1¢</string>
     <string name="coin_value_nickel">5¢</string>

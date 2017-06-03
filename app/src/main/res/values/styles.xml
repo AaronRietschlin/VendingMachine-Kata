@@ -20,4 +20,23 @@
         </item>
     </style>
 
+    <style name="TitleText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingEnd">@dimen/spacing_small</item>
+        <item name="android:paddingStart">@dimen/spacing_small</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead</item>
+        <item name="android:layout_marginTop">@dimen/spacing_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="HeaderText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Headline</item>
+        <item name="android:layout_marginTop">@dimen/spacing_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

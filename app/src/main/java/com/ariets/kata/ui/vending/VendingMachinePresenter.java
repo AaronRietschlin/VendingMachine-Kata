@@ -7,6 +7,9 @@ import com.ariets.kata.model.Coin;
 import com.ariets.kata.model.DisplayProvider;
 import com.ariets.kata.model.VendingMachine;
 
+import static com.ariets.kata.ui.vending.VendingError.INVALID_COIN;
+import static com.ariets.kata.ui.vending.VendingError.NO_COINS;
+
 public class VendingMachinePresenter implements
         VendingMachineContract.Presenter<VendingMachineContract.View> {
 
@@ -37,12 +40,55 @@ public class VendingMachinePresenter implements
         if (view == null) {
             return;
         }
-        vendingMachine.insertCoin(coin);
-        view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+        if (vendingMachine.insertCoin(coin)) {
+            onSuccess();
+        } else {
+            onError(coin.getValue());
+        }
+    }
+
+    @Override
+    public void insertCustomValue(String insertedTextString) {
+        try {
+            double value = Double.valueOf(insertedTextString);
+            if (vendingMachine.insertValue(value)) {
+                onSuccess();
+            } else {
+                onError(value);
+            }
+        } catch (NumberFormatException exception) {
+            view.onError(INVALID_COIN);
+        }
     }
 
     @Override
     public String getInitialDisplay() {
         return displayProvider.displayInsertCoin();
+    }
+
+    @Override
+    public void getInitialValue() {
+        view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+    }
+
+    @Override
+    public void returnCoins() {
+        double currentValue = vendingMachine.getCurrentValue();
+        if (currentValue == 0) {
+            view.onError(NO_COINS);
+        } else {
+            view.returnChange(vendingMachine.getFormattedCurrentValue());
+            vendingMachine.returnCoins();
+            view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+        }
+    }
+
+    private void onSuccess() {
+        view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+    }
+
+    private void onError(double value) {
+        view.returnChange(displayProvider.displayPrice(value));
+        view.onError(INVALID_COIN);
     }
 }

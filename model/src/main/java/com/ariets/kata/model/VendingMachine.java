@@ -48,7 +48,12 @@ public class VendingMachine {
         return currentValue;
     }
 
-    @Nullable public String getFormattedCurrentValue() {
+    public void returnCoins() {
+        currentValue = 0;
+    }
+
+    @Nullable
+    public String getFormattedCurrentValue() {
         if (currentValue < 0) {
             currentValue = 0;
         }

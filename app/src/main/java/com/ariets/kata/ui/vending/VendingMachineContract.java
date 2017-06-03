@@ -8,6 +8,9 @@ public interface VendingMachineContract {
 
         void setCurrentValue(String currentValue);
 
+        void returnChange(String change);
+
+        void onError(VendingError error);
     }
 
     interface Presenter<View> {
@@ -17,7 +20,13 @@ public interface VendingMachineContract {
 
         void insertCoin(Coin coin);
 
+        void insertCustomValue(String insertedTextString);
+
         String getInitialDisplay();
+
+        void getInitialValue();
+
+        void returnCoins();
     }
 
 }
