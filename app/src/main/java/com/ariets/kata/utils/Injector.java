@@ -36,6 +36,7 @@ public class Injector {
 
     public ProductDispenser provideProductDispenser() {
         // TODO - Better way to do this? For now, defaulting to five of each.
+
         return new ProductDispenser(asList(
                 CANDY, CANDY, CANDY, CANDY, CANDY,
                 CHIPS, CHIPS, CHIPS, CHIPS, CHIPS,

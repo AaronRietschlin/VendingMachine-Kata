@@ -5,7 +5,9 @@ import android.support.annotation.VisibleForTesting;
 
 import com.ariets.kata.model.Coin;
 import com.ariets.kata.model.DisplayProvider;
+import com.ariets.kata.model.Product;
 import com.ariets.kata.model.VendingMachine;
+import com.ariets.kata.model.VendingResult;
 
 import static com.ariets.kata.ui.vending.VendingError.INVALID_COIN;
 import static com.ariets.kata.ui.vending.VendingError.NO_COINS;
@@ -62,8 +64,29 @@ public class VendingMachinePresenter implements
     }
 
     @Override
-    public String getInitialDisplay() {
-        return displayProvider.displayInsertCoin();
+    public void selectProduct(Product product) {
+        VendingResult result = vendingMachine.selectProduct(product);
+        switch (result) {
+            case SUCCESS:
+                view.setCurrentDisplay(displayProvider.displayThankYou());
+                view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+                break;
+            case SOLD_OUT:
+                view.setCurrentDisplay(displayProvider.displaySoldOut());
+                break;
+            case INSUFFICIENT_FUNDS:
+                view.setCurrentDisplay(displayProvider.displayPrice(product));
+                view.onError(VendingError.INSUFFICIENT_FUNDS,
+                        displayProvider.displayPrice(product.getPrice()));
+                break;
+        }
+
+    }
+
+    @Override
+    public void initialize() {
+        String value = displayProvider.displayInsertCoin();
+        view.setCurrentDisplay(value);
     }
 
     @Override

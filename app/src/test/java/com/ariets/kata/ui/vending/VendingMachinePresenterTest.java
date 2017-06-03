@@ -3,12 +3,14 @@ package com.ariets.kata.ui.vending;
 
 import com.ariets.kata.model.DisplayProvider;
 import com.ariets.kata.model.VendingMachine;
+import com.ariets.kata.model.VendingResult;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.ariets.kata.model.Coin.NICKEL;
+import static com.ariets.kata.model.Product.COLA;
 import static com.ariets.kata.ui.vending.VendingError.INVALID_COIN;
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
@@ -63,10 +65,14 @@ public class VendingMachinePresenterTest {
     }
 
     @Test
-    public void getInitialDisplayForwardsToDisplayProvider() {
-        presenter.getInitialDisplay();
+    public void initializeCalsViewProperly() {
+        String text = "text";
+        doReturn(text).when(mockDisplayProvider).displayInsertCoin();
+        presenter.attachView(mockView);
 
-        verify(mockDisplayProvider).displayInsertCoin();
+        presenter.initialize();
+
+        verify(mockView).setCurrentDisplay(text);
     }
 
     @Test
@@ -109,6 +115,18 @@ public class VendingMachinePresenterTest {
         presenter.insertCustomValue(value);
 
         verify(mockView).onError(INVALID_COIN);
+    }
+
+    @Test
+    public void selectProductWithInsufficientFundsCallsViewProperly() {
+        doReturn(VendingResult.INSUFFICIENT_FUNDS).when(mockVendingMachine).selectProduct(COLA);
+        doReturn("1.50").when(mockDisplayProvider).displayPrice(COLA);
+        presenter.attachView(mockView);
+
+        presenter.selectProduct(COLA);
+
+        verify(mockView).setCurrentDisplay("1.50");
+        verify(mockVendingMachine).selectProduct(COLA);
     }
 
 }

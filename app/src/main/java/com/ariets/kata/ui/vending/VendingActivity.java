@@ -53,7 +53,7 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
         setSupportActionBar(toolbar);
         setupPresenter();
         presenter.attachView(this);
-        tvDisplay.setText(presenter.getInitialDisplay());
+        presenter.initialize();
     }
 
     @Override
@@ -100,7 +100,7 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
             R.id.vending_product_cola,
     })
     public void onProductClicked(ProductTextView view) {
-        Snackbar.make(toolbar, "Product selected: " + view.getProduct(), LENGTH_LONG).show();
+        presenter.selectProduct(view.getProduct());
         resetChange();
     }
 
@@ -135,7 +135,7 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
     }
 
     @Override
-    public void onError(VendingError error) {
+    public void onError(VendingError error, String... params) {
         @StringRes int errorStringRes = 0;
         switch (error) {
             case NO_COINS:
@@ -144,8 +144,23 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
             case INVALID_COIN:
                 errorStringRes = R.string.invalid_coin;
                 break;
+            case PRODUCT_SOLD_OUT:
+                errorStringRes = R.string.product_sold_out;
+                break;
+            case INSUFFICIENT_FUNDS:
+                errorStringRes = R.string.insufficient_funds;
+                break;
         }
-        Snackbar.make(toolbar, errorStringRes, LENGTH_LONG).show();
+        if (params == null) {
+            Snackbar.make(toolbar, errorStringRes, LENGTH_LONG).show();
+        } else {
+            Snackbar.make(toolbar, getString(errorStringRes, params), LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void setCurrentDisplay(String display) {
+        tvDisplay.setText(display);
     }
 
     private void resetChange() {

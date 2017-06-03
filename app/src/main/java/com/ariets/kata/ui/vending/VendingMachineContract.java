@@ -1,6 +1,7 @@
 package com.ariets.kata.ui.vending;
 
 import com.ariets.kata.model.Coin;
+import com.ariets.kata.model.Product;
 
 public interface VendingMachineContract {
 
@@ -10,7 +11,9 @@ public interface VendingMachineContract {
 
         void returnChange(String change);
 
-        void onError(VendingError error);
+        void onError(VendingError error, String... params);
+
+        void setCurrentDisplay(String display);
     }
 
     interface Presenter<View> {
@@ -18,11 +21,13 @@ public interface VendingMachineContract {
 
         void detachView();
 
+        void initialize();
+
         void insertCoin(Coin coin);
 
         void insertCustomValue(String insertedTextString);
 
-        String getInitialDisplay();
+        void selectProduct(Product product);
 
         void getInitialValue();
 
