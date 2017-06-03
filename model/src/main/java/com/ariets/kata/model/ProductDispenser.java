@@ -15,10 +15,16 @@ public class ProductDispenser {
     }
 
     public boolean isAvailable(Product product) {
-        return false;
+        Integer count = productMap.get(product);
+        return count != null && count > 0;
     }
 
     public boolean dispenseItem(@NonNull Product product) {
+        Integer count = productMap.get(product);
+        if (count != null && count-- > 0) {
+            productMap.put(product, count);
+            return true;
+        }
         return false;
     }
 

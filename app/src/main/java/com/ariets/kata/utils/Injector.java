@@ -4,10 +4,14 @@ import android.content.Context;
 
 import com.ariets.kata.model.DisplayProvider;
 import com.ariets.kata.model.MoneyValidator;
+import com.ariets.kata.model.Product;
 import com.ariets.kata.model.ProductDispenser;
 import com.ariets.kata.model.VendingMachine;
 import com.ariets.kata.ui.vending.VendingMachineContract;
 import com.ariets.kata.ui.vending.VendingMachinePresenter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.ariets.kata.model.Product.CANDY;
 import static com.ariets.kata.model.Product.CHIPS;
@@ -36,12 +40,11 @@ public class Injector {
 
     public ProductDispenser provideProductDispenser() {
         // TODO - Better way to do this? For now, defaulting to five of each.
-
-        return new ProductDispenser(asList(
-                CANDY, CANDY, CANDY, CANDY, CANDY,
-                CHIPS, CHIPS, CHIPS, CHIPS, CHIPS,
-                COLA, COLA, COLA, COLA, COLA
-        ));
+        Map<Product, Integer> map = new HashMap<>();
+        map.put(CANDY, 5);
+        map.put(CHIPS, 5);
+        map.put(COLA, 5);
+        return new ProductDispenser(map);
     }
 
 }

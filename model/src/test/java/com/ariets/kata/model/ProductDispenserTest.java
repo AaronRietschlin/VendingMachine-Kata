@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class ProductDispenserTest {
 
     @Test
     public void isAvailableReturnsTrueWhenProductIsAvailable() {
-        Map<Product, Integer> map = Collections.singletonMap(CANDY, 1);
+        Map<Product, Integer> map = demandMap(CANDY, 1);
         ProductDispenser productDispenser = new ProductDispenser(map);
 
         assertThat(productDispenser.isAvailable(CANDY)).isTrue();
@@ -25,7 +26,7 @@ public class ProductDispenserTest {
 
     @Test
     public void isAvailableReturnsFalseWhenProductIsNotAvailable() {
-        Map<Product, Integer> map = Collections.singletonMap(CANDY, 0);
+        Map<Product, Integer> map = demandMap(CANDY, 0);
         ProductDispenser productDispenser = new ProductDispenser(map);
 
         assertThat(productDispenser.isAvailable(CANDY)).isFalse();
@@ -33,7 +34,7 @@ public class ProductDispenserTest {
 
     @Test
     public void isAvailableReturnsFalseWhenGivenProductIsNotInMap() {
-        Map<Product, Integer> map = Collections.singletonMap(COLA, 0);
+        Map<Product, Integer> map = demandMap(COLA, 0);
         ProductDispenser productDispenser = new ProductDispenser(map);
 
         assertThat(productDispenser.isAvailable(CANDY)).isFalse();
@@ -41,7 +42,7 @@ public class ProductDispenserTest {
 
     @Test
     public void isAvailableReturnsFalseWhenValueIsNull() {
-        Map<Product, Integer> map = Collections.singletonMap(CANDY, null);
+        Map<Product, Integer> map = demandMap(CANDY, null);
         ProductDispenser productDispenser = new ProductDispenser(map);
 
         assertThat(productDispenser.isAvailable(CANDY)).isFalse();
@@ -49,7 +50,7 @@ public class ProductDispenserTest {
 
     @Test
     public void dispenseItemDecrementsCountWhenRemoved() {
-        Map<Product, Integer> map = Collections.singletonMap(CANDY, 1);
+        Map<Product, Integer> map = demandMap(CANDY, 1);
         ProductDispenser productDispenser = new ProductDispenser(map);
 
         productDispenser.dispenseItem(CANDY);
@@ -59,7 +60,7 @@ public class ProductDispenserTest {
 
     @Test
     public void dispenseItemReturnsTrueWhenItemIsRemoved() {
-        Map<Product, Integer> map = Collections.singletonMap(CANDY, 1);
+        Map<Product, Integer> map = demandMap(CANDY, 1);
         ProductDispenser productDispenser = new ProductDispenser(map);
 
         assertThat(productDispenser.dispenseItem(CANDY)).isTrue();
@@ -67,10 +68,15 @@ public class ProductDispenserTest {
 
     @Test
     public void dispenseItemReturnsFalseWhenItemIsNotPresent() {
-        Map<Product, Integer> map = Collections.singletonMap(COLA, 1);
+        Map<Product, Integer> map = demandMap(COLA, 1);
         ProductDispenser productDispenser = new ProductDispenser(map);
 
         assertThat(productDispenser.dispenseItem(CANDY)).isFalse();
-
+    }
+    
+    private Map<Product, Integer> demandMap(Product product, Integer count) {
+        Map<Product, Integer> map = new HashMap<>();
+        map.put(product, count);
+        return map;
     }
 }
