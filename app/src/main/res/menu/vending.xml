@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_money_label"
-        android:title="@null"
+        android:title="Test"
         app:showAsAction="always" />
 
 </menu>

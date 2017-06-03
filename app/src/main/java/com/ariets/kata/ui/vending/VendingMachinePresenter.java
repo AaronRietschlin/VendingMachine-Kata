@@ -102,6 +102,7 @@ public class VendingMachinePresenter implements
             initialDisplay = displayProvider.displayInsertCoin();
         }
         view.setCurrentDisplay(initialDisplay);
+        view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
     }
 
     @Override

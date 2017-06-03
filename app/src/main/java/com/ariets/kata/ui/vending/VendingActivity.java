@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import com.ariets.kata.utils.KeyboardUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 import static android.support.design.widget.Snackbar.LENGTH_LONG;
@@ -39,6 +42,8 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
     TextView tvCoinReturn;
     @BindView(R.id.vending_field_custom_value)
     TextInputLayout tilCustomValueField;
+    @BindView(R.id.vending_check_exact_change)
+    CheckBox checkboxExactChange;
 
     private MenuItem moneyMenuItem;
     private Injector injector;
@@ -53,8 +58,6 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
         injector = new Injector();
         setSupportActionBar(toolbar);
         setupPresenter();
-        presenter.attachView(this);
-        presenter.initialize();
     }
 
     @Override
@@ -70,18 +73,25 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.vending, menu);
         moneyMenuItem = menu.findItem(R.id.menu_money_label);
         presenter.getInitialValue();
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     private void setupPresenter() {
+        if (presenter != null) {
+            presenter.detachView();
+        }
+        double initialValue = checkboxExactChange.isChecked() ? 0.00 : 100;
         MoneyValidator moneyValidator = injector.provideMoneyValidator();
         DisplayProvider displayProvider = injector.provideAndroidMoneyValidator(this);
         ProductDispenser productDispenser = injector.provideProductDispenser();
-        VendingMachine vendingMachine = injector.provideVendingMachine(moneyValidator, displayProvider, productDispenser);
+        VendingMachine vendingMachine = injector.provideVendingMachine(moneyValidator, displayProvider, productDispenser, initialValue);
         presenter = injector.providePresenter(vendingMachine, displayProvider);
+        presenter.attachView(this);
+        presenter.initialize();
     }
 
     @OnClick({
@@ -121,6 +131,11 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
     public void onReturnCoinsClicked() {
         resetChange();
         presenter.returnCoins();
+    }
+
+    @OnCheckedChanged(R.id.vending_check_exact_change)
+    public void onExactChangeChecked(boolean checked) {
+        setupPresenter();
     }
 
     @Override

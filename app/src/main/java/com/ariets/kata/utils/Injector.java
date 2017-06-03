@@ -26,8 +26,9 @@ public class Injector {
     }
 
     public VendingMachine provideVendingMachine(
-            MoneyValidator validator, DisplayProvider displayProvider, ProductDispenser dispenser) {
-        return new VendingMachine(validator, displayProvider, dispenser, 0.00);
+            MoneyValidator validator, DisplayProvider displayProvider, ProductDispenser dispenser,
+            double moneyInMachine) {
+        return new VendingMachine(validator, displayProvider, dispenser, moneyInMachine);
     }
 
     public MoneyValidator provideMoneyValidator() {
