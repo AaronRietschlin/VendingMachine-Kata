@@ -29,6 +29,8 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.vending_tv_display)
+    TextView tvDisplay;
 
     private MenuItem moneyMenuItem;
     private Injector injector;
@@ -49,6 +51,7 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
     protected void onStart() {
         super.onStart();
         presenter.attachView(this);
+        tvDisplay.setText(presenter.getInitialDisplay());
     }
 
     @Override
@@ -69,7 +72,7 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
         DisplayProvider displayProvider = injector.provideAndroidMoneyValidator(this);
         ProductDispenser productDispenser = injector.provideProductDispenser();
         VendingMachine vendingMachine = injector.provideVendingMachine(moneyValidator, displayProvider, productDispenser);
-        presenter = injector.providePresenter(vendingMachine);
+        presenter = injector.providePresenter(vendingMachine, displayProvider);
     }
 
     @OnClick({
@@ -102,4 +105,5 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
             moneyMenuItem.setTitle(currentValue);
         }
     }
+
 }

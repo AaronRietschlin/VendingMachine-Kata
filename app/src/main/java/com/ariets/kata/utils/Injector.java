@@ -17,8 +17,8 @@ import static java.util.Arrays.asList;
 public class Injector {
 
     public VendingMachineContract.Presenter<VendingMachineContract.View> providePresenter(
-            VendingMachine vendingMachine) {
-        return new VendingMachinePresenter(vendingMachine);
+            VendingMachine vendingMachine, DisplayProvider displayProvider) {
+        return new VendingMachinePresenter(vendingMachine, displayProvider);
     }
 
     public VendingMachine provideVendingMachine(

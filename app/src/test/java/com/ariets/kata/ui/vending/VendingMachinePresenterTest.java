@@ -1,7 +1,7 @@
 package com.ariets.kata.ui.vending;
 
 
-import com.ariets.kata.model.Coin;
+import com.ariets.kata.model.DisplayProvider;
 import com.ariets.kata.model.VendingMachine;
 
 import org.junit.Before;
@@ -21,13 +21,15 @@ public class VendingMachinePresenterTest {
     VendingMachine mockVendingMachine;
     @Mock
     VendingMachineContract.View mockView;
+    @Mock
+    DisplayProvider mockDisplayProvider;
 
     private VendingMachinePresenter presenter;
 
     @Before
     public void setUp() {
         initMocks(this);
-        presenter = new VendingMachinePresenter(mockVendingMachine);
+        presenter = new VendingMachinePresenter(mockVendingMachine, mockDisplayProvider);
     }
 
     @Test
@@ -55,6 +57,13 @@ public class VendingMachinePresenterTest {
 
         verify(mockView).setCurrentValue("$1.50");
         verify(mockVendingMachine).getFormattedCurrentValue();
+    }
+
+    @Test
+    public void getInitiaLDisplayForwardsToDisplayProvider() {
+        presenter.getInitialDisplay();
+
+        verify(mockDisplayProvider).displayInsertCoin();
     }
 
 }

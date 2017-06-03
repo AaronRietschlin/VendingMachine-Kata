@@ -7,6 +7,7 @@ public interface VendingMachineContract {
     interface View {
 
         void setCurrentValue(String currentValue);
+
     }
 
     interface Presenter<View> {
@@ -15,6 +16,8 @@ public interface VendingMachineContract {
         void detachView();
 
         void insertCoin(Coin coin);
+
+        String getInitialDisplay();
     }
 
 }
