@@ -167,10 +167,18 @@ public class VendingActivity extends AppCompatActivity implements VendingMachine
     @Override
     public void setCurrentDisplay(String display) {
         tvDisplay.setText(display);
+        String insertCoin = getString(R.string.display_insert_coin);
+        if (!TextUtils.equals(display, insertCoin)) {
+            delayAndDisplay(insertCoin);
+        }
     }
 
     private void resetChange() {
         tvCoinReturn.setText("");
+    }
+
+    private void delayAndDisplay(final String textToDisplay) {
+        tvDisplay.postDelayed(() -> setCurrentDisplay(textToDisplay), 3000);
     }
 
 }
