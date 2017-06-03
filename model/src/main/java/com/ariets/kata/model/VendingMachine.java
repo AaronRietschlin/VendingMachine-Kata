@@ -74,13 +74,13 @@ public class VendingMachine {
     }
 
     // TODO - This isn't right. Need to determine the type of change we can make and return from that.
+    // Do it by not increasing money in machine.
     public boolean canProvideChange(Product product) {
         return moneyInMachine > product.getPrice();
     }
 
     private void increaseValue(double money) {
         currentValue += money;
-        moneyInMachine += money;
     }
 
     private void decreaseValue(double money) {

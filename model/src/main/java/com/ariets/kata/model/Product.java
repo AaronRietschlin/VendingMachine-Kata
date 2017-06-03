@@ -1,7 +1,5 @@
 package com.ariets.kata.model;
 
-import java.text.DecimalFormat;
-
 public enum Product {
 
     COLA(1.00),

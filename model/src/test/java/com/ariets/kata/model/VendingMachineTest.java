@@ -1,18 +1,14 @@
 package com.ariets.kata.model;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
-
-import java.util.List;
 
 import static com.ariets.kata.model.Coin.DIME;
 import static com.ariets.kata.model.Coin.NICKEL;
 import static com.ariets.kata.model.Coin.PENNY;
 import static com.ariets.kata.model.Coin.QUARTER;
 import static com.ariets.kata.model.Product.COLA;
-import static com.ariets.kata.model.VendingResult.EXACT_CHANGE_REQUIRED;
 import static com.ariets.kata.model.VendingResult.INSUFFICIENT_FUNDS;
 import static com.ariets.kata.model.VendingResult.SOLD_OUT;
 import static com.ariets.kata.model.VendingResult.SUCCESS;
@@ -154,6 +150,19 @@ public class VendingMachineTest {
     @Test
     public void canProvideChangeReturnsTrueWhenMoneyIsValid() {
         assertThat(vendingMachine.canProvideChange(COLA)).isTrue();
+    }
+
+    @Test
+    public void selectProductWhenCannotProvideChangeIsFalseReturnsExactChange() {
+        doReturn(true).when(mockMoneyValidator).isValid(10.00);
+        doReturn(true).when(mockProductDispenser).isAvailable(COLA);
+        vendingMachine.insertValue(10.00);
+
+        vendingMachine.selectProduct(COLA);
+
+        verify(mockProductDispenser).dispenseItem(COLA);
+        verify(mockMoneyValidator).isValid(10.00);
+        verify(mockProductDispenser).isAvailable(COLA);
     }
 
 }
