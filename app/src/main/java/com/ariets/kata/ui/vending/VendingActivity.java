@@ -32,6 +32,9 @@ import butterknife.OnClick;
 
 import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
+/**
+ * The Activity (UI) for the Vending Machine.
+ */
 public class VendingActivity extends AppCompatActivity implements VendingMachineContract.View {
 
     @BindView(R.id.toolbar)
