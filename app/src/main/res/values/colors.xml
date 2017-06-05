@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#FF6600</color>
+    <color name="colorPrimaryDark">#c14d00</color>
+    <color name="colorAccent">#FF6600</color>
+
+    <color name="coin_penny">#BF582D</color>
+    <color name="coin_nickel">#6e6e6e</color>
+    <color name="coin_dime">#c7c6c1</color>
+    <color name="coin_quarter">#efe7e0</color>
+
 </resources>

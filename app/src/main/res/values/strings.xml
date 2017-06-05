@@ -1,3 +1,34 @@
 <resources>
-    <string name="app_name">Pillar-VendingMachine-Kata</string>
+    <string name="app_name">Pillar Vending</string>
+
+    <string name="display_sold_out">SOLD OUT</string>
+    <string name="display_thank_you">THANK YOU</string>
+    <string name="display_insert_coin">INSERT COIN</string>
+    <string name="display_price">PRICE: $%1$s</string>
+    <string name="display_exact_change">EXACT CHANGE ONLY</string>
+
+    <string name="menu_exact_change_required">Require Exact Change</string>
+    <string name="menu_enough_money">Do not require Exact Change</string>
+
+    <string name="price">$%s</string>
+    <string name="switch_exact_change">Exact Change</string>
+
+    <string name="custom_value">Enter Custom Value</string>
+    <string name="title_products">Products</string>
+    <string name="title_change">Change</string>
+    <string name="product_title">%1$s ($%2$s)</string>
+    <string name="return_coins">Return Coins</string>
+    <string name="coin_return_value">Change: %s</string>
+    <string name="no_coins">No coins to return.</string>
+    <string name="invalid_coin">Invalid coin. Only quarters, dimes and nickels accepted. Money has been returned.</string>
+    <string name="product_sold_out">Unfortunately, %s is sold out.</string>
+    <string name="insufficient_funds">Insufficient funds. Please insert at least %s.</string>
+    <string name="enjoy_your_product">Dispensing %s. Enjoy!</string>
+    <string name="exact_change">Unfortunately, you must enter exact change.</string>
+
+    <string name="coin_value_penny">1¢</string>
+    <string name="coin_value_nickel">5¢</string>
+    <string name="coin_value_dime">10¢</string>
+    <string name="coin_value_quarter">25¢</string>
+
 </resources>

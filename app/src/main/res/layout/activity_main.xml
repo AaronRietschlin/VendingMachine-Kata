@@ -1,18 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ariets.kata.MainActivity">
+    tools:context="com.ariets.kata.ui.vending.VendingActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="?colorPrimary"
+        android:focusableInTouchMode="true"
+        android:gravity="end"
+        app:theme="@style/ToolbarTheme"
+        tools:title="Pillar Vending">
 
-</android.support.constraint.ConstraintLayout>
+        <requestFocus />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?android:actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/vending_tv_display"
+                style="@style/HeaderText"
+                tools:text="INSUFFICIENT FUNDS" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_quarter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="quarter" />
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_dime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="dime" />
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_nickel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="nickel" />
+
+                    <com.ariets.kata.ui.widget.CoinView
+                        android:id="@+id/coin_view_penny"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:coinType="penny" />
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_small">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/vending_field_custom_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/custom_value"
+                    app:hintEnabled="true">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionGo"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/vending_btn_custom_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="@dimen/spacing_small"
+                    android:tint="@color/colorAccent"
+                    app:srcCompat="@drawable/ic_send" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/TitleText"
+                android:text="@string/title_products" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_small"
+                android:paddingStart="@dimen/spacing_small">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ariets.kata.ui.widget.ProductTextView
+                        android:id="@+id/vending_product_candy"
+                        style="@style/ProductButton"
+                        app:productType="candy" />
+
+                    <com.ariets.kata.ui.widget.ProductTextView
+                        android:id="@+id/vending_product_chips"
+                        style="@style/ProductButton"
+                        app:productType="chips" />
+
+                    <com.ariets.kata.ui.widget.ProductTextView
+                        android:id="@+id/vending_product_cola"
+                        style="@style/ProductButton"
+                        app:productType="cola" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/spacing_medium">
+
+                <TextView
+                    style="@style/TitleText"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="@string/title_change" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <CheckBox
+                    android:id="@+id/vending_check_exact_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:switchPadding="@dimen/spacing_small"
+                    android:text="@string/switch_exact_change" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/vending_btn_coin_return"
+                style="@style/ProductButton"
+                android:paddingEnd="@dimen/spacing_medium"
+                android:paddingStart="@dimen/spacing_medium"
+                android:text="@string/return_coins" />
+
+            <TextView
+                android:id="@+id/vending_tv_coin_return_label"
+                style="@style/HeaderText"
+                android:layout_marginTop="@dimen/spacing_small"
+                tools:text="Change: $0.50" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
