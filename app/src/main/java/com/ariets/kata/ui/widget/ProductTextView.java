@@ -14,6 +14,7 @@ import com.ariets.kata.model.Product;
 import static com.ariets.kata.model.Product.CANDY;
 import static com.ariets.kata.model.Product.CHIPS;
 import static com.ariets.kata.model.Product.COLA;
+import static com.ariets.kata.utils.UiUtils.obtainStyledAttributes;
 
 public class ProductTextView extends AppCompatTextView {
 
@@ -39,8 +40,7 @@ public class ProductTextView extends AppCompatTextView {
 
     private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray typedArray = context.getTheme()
-                    .obtainStyledAttributes(attrs, R.styleable.ProductTextView, 0, 0);
+            TypedArray typedArray = obtainStyledAttributes(context, attrs, R.styleable.ProductTextView);
             try {
                 setProductType(context, typedArray.getInteger(R.styleable.ProductTextView_productType, 0));
             } finally {

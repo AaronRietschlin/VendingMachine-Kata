@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: '../tests.gradle'
 
 android {
     compileSdkVersion Integer.parseInt(ANDROID_COMPILE_SDK_VERSION)

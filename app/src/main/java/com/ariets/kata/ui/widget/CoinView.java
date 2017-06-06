@@ -1,9 +1,7 @@
 package com.ariets.kata.ui.widget;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -12,11 +10,9 @@ import android.support.annotation.StringRes;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +30,7 @@ import static com.ariets.kata.model.Coin.DIME;
 import static com.ariets.kata.model.Coin.NICKEL;
 import static com.ariets.kata.model.Coin.PENNY;
 import static com.ariets.kata.model.Coin.QUARTER;
+import static com.ariets.kata.utils.UiUtils.obtainStyledAttributes;
 
 public class CoinView extends FrameLayout {
 
@@ -74,8 +71,7 @@ public class CoinView extends FrameLayout {
         if (attrs == null) {
             return;
         }
-        Resources.Theme theme = context.getTheme();
-        TypedArray typedArray = theme.obtainStyledAttributes(attrs, R.styleable.CoinView, 0, 0);
+        TypedArray typedArray = obtainStyledAttributes(context, attrs, R.styleable.CoinView);
         try {
             int coinType = typedArray.getInteger(R.styleable.CoinView_coinType, 0);
             setCoinType(coinType);
