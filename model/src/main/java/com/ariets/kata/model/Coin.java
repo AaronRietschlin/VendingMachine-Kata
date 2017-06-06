@@ -1,8 +1,5 @@
 package com.ariets.kata.model;
 
-/**
- * Represents the coins that are available to the user. Note: {@link #PENNY} is invalid.
- */
 public enum Coin {
 
     PENNY(0.01),
