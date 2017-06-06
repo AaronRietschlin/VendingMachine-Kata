@@ -60,11 +60,11 @@ The output will be displayed in line as the tests run. This is done via the `tes
     ```
 
 #### Via Android Studio
-1. Expand the module for which you would like to test
+1. Expand the module for which you would like to test.
 2. Expand the `src/test` directory. 
-3. Right click on `java`
-4. Click `Run Tests in java`
-5. See results
+3. Right click on `java`.
+4. Click `Run Tests in java`.
+5. See results.
 
 ### Android Tests
 In order to run the android test suite, you will need to have a device connected via ADB. 
@@ -80,3 +80,10 @@ To see the outputs, you can view the results in the generated files in the build
 ```
 Pillar-VendingMachine-Kata/app/build/reports/androidTests/connected/index.html
 ```
+
+#### Via Android Studio
+1. Expand the `app/src/androidTest` directory. 
+2. Right click `app/src/androidTest/java`.
+3. Click "Run All Tests"
+4. Select your target.
+5. See the results. 
