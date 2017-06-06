@@ -21,8 +21,8 @@ public class VendingMachinePresenter implements
     private final VendingMachine vendingMachine;
     private final DisplayProvider displayProvider;
 
-    @VisibleForTesting
     @Nullable
+    @VisibleForTesting
     VendingMachineContract.View view;
 
     public VendingMachinePresenter(VendingMachine vendingMachine, DisplayProvider displayProvider) {
@@ -71,22 +71,20 @@ public class VendingMachinePresenter implements
         VendingResult result = vendingMachine.selectProduct(product);
         switch (result) {
             case SUCCESS:
-                view.setCurrentDisplay(displayProvider.displayThankYou());
-                view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+                setCurrentDisplayOnView(displayProvider.displayThankYou());
+                setCurrentValueOnView(vendingMachine.getFormattedCurrentValue());
                 view.onSuccess(product);
                 break;
             case SOLD_OUT:
-                view.setCurrentDisplay(displayProvider.displaySoldOut());
-                view.onError(VendingError.PRODUCT_SOLD_OUT, product.toString());
+                setCurrentDisplayWithError(displayProvider.displaySoldOut(),
+                        VendingError.PRODUCT_SOLD_OUT, product.toString());
                 break;
             case INSUFFICIENT_FUNDS:
-                view.setCurrentDisplay(displayProvider.displayPrice(product));
-                view.onError(VendingError.INSUFFICIENT_FUNDS,
-                        displayProvider.displayPrice(product.getPrice()));
+                setCurrentDisplayWithError(displayProvider.displayPrice(product),
+                        VendingError.INSUFFICIENT_FUNDS, displayProvider.displayPrice(product.getPrice()));
                 break;
             case EXACT_CHANGE_REQUIRED:
-                view.setCurrentDisplay(displayProvider.displayExactChange());
-                view.onError(VendingError.EXACT_CHANGE);
+                setCurrentDisplayWithError(displayProvider.displayExactChange(), VendingError.EXACT_CHANGE);
                 break;
         }
 
@@ -101,13 +99,13 @@ public class VendingMachinePresenter implements
         } else {
             initialDisplay = displayProvider.displayInsertCoin();
         }
-        view.setCurrentDisplay(initialDisplay);
-        view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+        setCurrentDisplayOnView(initialDisplay);
+        setCurrentValueOnView(vendingMachine.getFormattedCurrentValue());
     }
 
     @Override
     public void getInitialValue() {
-        view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+        setCurrentValueOnView(vendingMachine.getFormattedCurrentValue());
     }
 
     @Override
@@ -118,7 +116,7 @@ public class VendingMachinePresenter implements
         } else {
             view.returnChange(vendingMachine.getFormattedCurrentValue());
             vendingMachine.returnCoins();
-            view.setCurrentValue(vendingMachine.getFormattedCurrentValue());
+            setCurrentValueOnView(vendingMachine.getFormattedCurrentValue());
         }
     }
 
@@ -130,4 +128,18 @@ public class VendingMachinePresenter implements
         view.returnChange(displayProvider.displayPrice(value));
         view.onError(INVALID_COIN);
     }
+
+    private void setCurrentDisplayWithError(String display, VendingError error, String... params) {
+        setCurrentDisplayOnView(display);
+        view.onError(error, params);
+    }
+
+    private void setCurrentValueOnView(String currentValue) {
+        view.setCurrentValue(currentValue);
+    }
+
+    private void setCurrentDisplayOnView(String currentDisplay) {
+        view.setCurrentDisplay(currentDisplay);
+    }
+
 }
